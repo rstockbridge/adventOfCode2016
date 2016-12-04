@@ -45,21 +45,7 @@ public class EasterBunnyHeadquarters {
                 next = previous.turnLeft();
             }
 
-            switch (next) {
-                case NORTH:
-                    location.moveY(distance);
-                    break;
-                case SOUTH:
-                    location.moveY(-distance);
-                    break;
-                case EAST:
-                    location.moveX(distance);
-                    break;
-                case WEST:
-                    location.moveX(-distance);
-                    break;
-            }
-
+            location = getUpdatedLocation(location, next, distance);
             previous = next;
         }
         return location;
@@ -87,56 +73,33 @@ public class EasterBunnyHeadquarters {
                 next = previous.turnLeft();
             }
 
-            switch (next) {
-                case NORTH:
-                    for (int step = 1; step <= distance; step++) {
-                        Coordinates place = new Coordinates(location.x, location.y + step);
-                        if (placesVisited.contains(place)) {
-                            return place;
-                        } else {
-                            placesVisited.add(place);
-                        }
-                    }
-                    location.moveY(distance);
-                    break;
-                case SOUTH:
-                    for (int step = 1; step <= distance; step++) {
-                        Coordinates place = new Coordinates(location.x, location.y - step);
-                        if (placesVisited.contains(place)) {
-                            return place;
-                        } else {
-                            placesVisited.add(place);
-                        }
-                    }
-                    location.moveY(-distance);
-                    break;
-                case EAST:
-                    for (int step = 1; step <= distance; step++) {
-                        Coordinates place = new Coordinates(location.x + step, location.y);
-                        if (placesVisited.contains(new Coordinates(location.x + step, location.y))) {
-                            return place;
-                        } else {
-                            placesVisited.add(place);
-                        }
-                    }
-                    location.moveX(distance);
-                    break;
-                case WEST:
-                    for (int step = 1; step <= distance; step++) {
-                        Coordinates place = new Coordinates(location.x - step, location.y);
-                        if (placesVisited.contains(place)) {
-                            return place;
-                        } else {
-                            placesVisited.add(place);
-                        }
-                    }
-                    location.moveX(-distance);
-                    break;
+            for (int step = 0; step < distance; step++) {
+                location = getUpdatedLocation(location, next, 1);
+
+                if (placesVisited.contains(location)) {
+                    return location;
+                } else {
+                    placesVisited.add(location);
+                }
             }
 
             previous = next;
         }
         return null;
+    }
+
+    private static Coordinates getUpdatedLocation(Coordinates location, Orientation orientation, int distance) {
+        switch (orientation) {
+            case NORTH:
+                return new Coordinates(location.x, location.y + distance);
+            case SOUTH:
+                return new Coordinates(location.x, location.y - distance);
+            case EAST:
+                return new Coordinates(location.x + distance, location.y);
+            case WEST:
+                return new Coordinates(location.x - distance, location.y);
+        }
+        throw new IllegalStateException("This branch should never be executed.");
     }
 
     private static void displayNumBlocks(int xCoordinate, int yCoordinate) {
