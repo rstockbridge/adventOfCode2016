@@ -9,14 +9,6 @@ class Coordinates {
         y = inputY;
     }
 
-    void moveX(int distance) {
-        x += distance;
-    }
-
-    void moveY(int distance) {
-        y += distance;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
