@@ -31,59 +31,34 @@ public class BathroomCode {
             "ULRRRULDLURDLULRULDRLR";
 
     public static void main(String[] args) {
-        System.out.format("The Part I bathroom code is %s.\n", generateCodePartI());
-        System.out.format("The Part II bathroom code is %s.\n", generateCodePartII());
+        SquareKeypad squareKeypad = new SquareKeypad(0, 0);
+        System.out.format("The Part I bathroom code is %s.\n", generateCode(squareKeypad));
+
+        DiamondKeypad diamondKeypad = new DiamondKeypad(-2, 0);
+        System.out.format("The Part II bathroom code is %s.\n", generateCode(diamondKeypad));
     }
 
-    private static String generateCodePartI() {
+    private static String generateCode(Keypad keypad) {
         final String[] instructions = INSTRUCTIONS.split("\n");
-        KeypadCoordinates location = new KeypadCoordinates(0, 0);
         String code = "";
-
         char direction;
+
         for (String instruction : instructions) {
             for (int button = 0; button < instruction.length(); button++) {
                 direction = instruction.charAt(button);
 
                 if (direction == 'U') {
-                    location.moveUpIfPossiblePartI();
+                    keypad.moveUpIfPossible();
                 } else if (direction == 'D') {
-                    location.moveDownIfPossiblePartI();
+                    keypad.moveDownIfPossible();
                 } else if (direction == 'R') {
-                    location.moveRightIfPossiblePartI();
+                    keypad.moveRightIfPossible();
                 } else {
-                    location.moveLeftIfPossiblePartI();
+                    keypad.moveLeftIfPossible();
                 }
             }
 
-            code += location.getKeypadNumberPartI();
-        }
-
-        return code;
-    }
-
-    private static String generateCodePartII() {
-        final String[] instructions = INSTRUCTIONS.split("\n");
-        KeypadCoordinates location = new KeypadCoordinates(-2, 0);
-        String code = "";
-
-        char direction;
-        for (String instruction : instructions) {
-            for (int button = 0; button < instruction.length(); button++) {
-                direction = instruction.charAt(button);
-
-                if (direction == 'U') {
-                    location.moveUpIfPossiblePartII();
-                } else if (direction == 'D') {
-                    location.moveDownIfPossiblePartII();
-                } else if (direction == 'R') {
-                    location.moveRightIfPossiblePartII();
-                } else {
-                    location.moveLeftIfPossiblePartII();
-                }
-            }
-
-            code += location.getKeypadNumberPartII();
+            code += keypad.getCurrentKey();
         }
 
         return code;
