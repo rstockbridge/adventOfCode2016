@@ -25,7 +25,6 @@ public class IdentifyTriangles {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     private static int getNumValidTrianglesPartI(ArrayList<String> storedInputFile) {
