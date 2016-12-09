@@ -11,31 +11,49 @@ public class IdentifyRealRooms {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader("/Users/rebecca/Desktop/rebecca_java/" +
                 "adventOfCode2016/day4/src/com/github/rstockbridge/input.txt"))) {
 
-            ArrayList<String> storedInputFile = new ArrayList<>();
+            List<String> storedInputFile = new ArrayList<>();
             for (String line; (line = bufferedReader.readLine()) != null; ) {
                 storedInputFile.add(line);
             }
+            List<RoomCandidate> roomCandidates = getRoomCandidates(storedInputFile);
 
-            System.out.format("The sum of sector IDs is %d.\n", calcSumSectorIDsOfRealRooms(storedInputFile));
+            System.out.format("The sum of sector IDs is %d.\n\n", calcSumSectorIDsOfRealRooms(roomCandidates));
+
+            printDecryptedNames(roomCandidates);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private static int calcSumSectorIDsOfRealRooms(ArrayList<String> storedInputFile) {
+    private static int calcSumSectorIDsOfRealRooms(List<RoomCandidate> roomCandidates) {
         int sectorIDSum = 0;
 
-        for (String roomData : storedInputFile) {
-
-            RoomCandidate roomCandidate = new RoomCandidate(roomData);
-
+        for (RoomCandidate roomCandidate : roomCandidates) {
             if (roomCandidate.isRealRoom()) {
                 sectorIDSum += Integer.parseInt(roomCandidate.getSectorID());
             }
         }
 
         return sectorIDSum;
+    }
+
+    private static void printDecryptedNames(List<RoomCandidate> roomCandidates) {
+        for (RoomCandidate roomCandidate : roomCandidates) {
+            System.out.println(roomCandidate.getDecryptedName());
+        }
+    }
+
+    private static List<RoomCandidate> getRoomCandidates(List<String> storedInputFile) {
+        List<RoomCandidate> result = new ArrayList<>();
+
+        for (String roomData : storedInputFile) {
+
+            RoomCandidate roomCandidate = new RoomCandidate(roomData);
+            result.add(roomCandidate);
+        }
+
+        return result;
     }
 }
 

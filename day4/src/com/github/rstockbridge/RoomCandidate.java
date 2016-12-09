@@ -3,17 +3,19 @@ package com.github.rstockbridge;
 import java.util.*;
 
 class RoomCandidate {
-    private String name;
-    private String sectorID;
-    private String checksum;
-    private NavigableSet<Map.Entry<Character, Integer>> sortedCharacterEntries;
+    private final String nameWithoutDashes;
+    private final String nameWithSpaces;
+    private final String decryptedName;
+    private final String sectorID;
+    private final String checksum;
+    private final NavigableSet<Map.Entry<Character, Integer>> sortedCharacterEntries;
 
     RoomCandidate(String roomData) {
         String[] splitRoomData = roomData.split("\\[");
-        splitRoomData[0] = splitRoomData[0].replace("-", "");
 
-        name = splitRoomData[0].substring(0, splitRoomData[0].length() - 3);
         sectorID = splitRoomData[0].substring(splitRoomData[0].length() - 3, splitRoomData[0].length());
+        nameWithoutDashes = splitRoomData[0].substring(0, splitRoomData[0].length() - 3).replace("-", "");
+        nameWithSpaces = splitRoomData[0].substring(0, splitRoomData[0].length() - 3).replace("-", " ");
         checksum = splitRoomData[1].substring(0, splitRoomData[1].length() - 1);
 
         sortedCharacterEntries = new TreeSet<>(new Comparator<Map.Entry<Character, Integer>>() {
@@ -26,6 +28,12 @@ class RoomCandidate {
                 }
             }
         });
+
+        decryptedName = calculateDecryptedName();
+    }
+
+    String getDecryptedName() {
+        return decryptedName;
     }
 
     String getSectorID() {
@@ -44,17 +52,15 @@ class RoomCandidate {
     }
 
     private void calcSortedCharacterEntries() {
-
         Set<Map.Entry<Character, Integer>> characterCountMapEntries = calcCharacterCounts().entrySet();
         sortedCharacterEntries.addAll(characterCountMapEntries);
     }
 
     private Map<Character, Integer> calcCharacterCounts() {
-
         Map<Character, Integer> characterCountMap = new HashMap<>();
 
-        for (int letter = 0; letter < name.length(); letter++) {
-            char character = name.charAt(letter);
+        for (int letter = 0; letter < nameWithoutDashes.length(); letter++) {
+            char character = nameWithoutDashes.charAt(letter);
             if (characterCountMap.containsKey(character)) {
                 characterCountMap.put(character, characterCountMap.get(character) + 1);
             } else {
@@ -63,6 +69,20 @@ class RoomCandidate {
         }
 
         return characterCountMap;
+    }
+
+    private String calculateDecryptedName() {
+        String result = "";
+
+        for (int letter = 0; letter < nameWithSpaces.length(); letter++) {
+            if (nameWithSpaces.charAt(letter) == ' ') {
+                result += " ";
+            } else {
+                result += (char) (((int) nameWithSpaces.charAt(letter) - (int) 'a' + Integer.parseInt(sectorID)) % 26 + (int) 'a');
+            }
+        }
+
+        return result;
     }
 }
 
