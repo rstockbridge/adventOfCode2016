@@ -18,7 +18,6 @@ public class IdentifyRealRooms {
             List<RoomCandidate> roomCandidates = getRoomCandidates(storedInputFile);
 
             System.out.format("The sum of sector IDs is %d.\n\n", calcSumSectorIDsOfRealRooms(roomCandidates));
-
             printDecryptedNames(roomCandidates);
 
         } catch (IOException e) {
@@ -48,7 +47,6 @@ public class IdentifyRealRooms {
         List<RoomCandidate> result = new ArrayList<>();
 
         for (String roomData : storedInputFile) {
-
             RoomCandidate roomCandidate = new RoomCandidate(roomData);
             result.add(roomCandidate);
         }

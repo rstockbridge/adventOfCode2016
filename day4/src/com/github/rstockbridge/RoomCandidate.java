@@ -8,7 +8,6 @@ class RoomCandidate {
     private final String decryptedName;
     private final String sectorID;
     private final String checksum;
-    private final NavigableSet<Map.Entry<Character, Integer>> sortedCharacterEntries;
 
     RoomCandidate(String roomData) {
         String[] splitRoomData = roomData.split("\\[");
@@ -17,18 +16,6 @@ class RoomCandidate {
         nameWithoutDashes = splitRoomData[0].substring(0, splitRoomData[0].length() - 3).replace("-", "");
         nameWithSpaces = splitRoomData[0].substring(0, splitRoomData[0].length() - 3).replace("-", " ");
         checksum = splitRoomData[1].substring(0, splitRoomData[1].length() - 1);
-
-        sortedCharacterEntries = new TreeSet<>(new Comparator<Map.Entry<Character, Integer>>() {
-            @Override
-            public int compare(Map.Entry<Character, Integer> o1, Map.Entry<Character, Integer> o2) {
-                if (o1.getValue().equals(o2.getValue())) {
-                    return Character.compare(o1.getKey(), o2.getKey());
-                } else {
-                    return -Integer.compare(o1.getValue(), o2.getValue());
-                }
-            }
-        });
-
         decryptedName = calculateDecryptedName();
     }
 
@@ -41,22 +28,32 @@ class RoomCandidate {
     }
 
     boolean isRealRoom() {
-        calcSortedCharacterEntries();
-
         String fiveMostCommonLetters = "";
         for (int i = 0; i < 5; i++) {
-            fiveMostCommonLetters += sortedCharacterEntries.pollFirst().getKey();
+            fiveMostCommonLetters += getSortedCharacterEntries().get(0).getKey();
         }
 
         return checksum.equals(fiveMostCommonLetters);
     }
 
-    private void calcSortedCharacterEntries() {
-        Set<Map.Entry<Character, Integer>> characterCountMapEntries = calcCharacterCounts().entrySet();
-        sortedCharacterEntries.addAll(characterCountMapEntries);
+    private List<Map.Entry<Character, Integer>> getSortedCharacterEntries() {
+        List<Map.Entry<Character, Integer>> sortedCharacterMapEntries = new ArrayList<>(calculateCharacterCountMap().entrySet());
+
+        Collections.sort(sortedCharacterMapEntries, new Comparator<Map.Entry<Character, Integer>>() {
+            @Override
+            public int compare(Map.Entry<Character, Integer> o1, Map.Entry<Character, Integer> o2) {
+                if (o1.getValue().equals(o2.getValue())) {
+                    return Character.compare(o1.getKey(), o2.getKey());
+                } else {
+                    return -Integer.compare(o1.getValue(), o2.getValue());
+                }
+            }
+        });
+
+        return sortedCharacterMapEntries;
     }
 
-    private Map<Character, Integer> calcCharacterCounts() {
+    private Map<Character, Integer> calculateCharacterCountMap() {
         Map<Character, Integer> characterCountMap = new HashMap<>();
 
         for (int letter = 0; letter < nameWithoutDashes.length(); letter++) {
