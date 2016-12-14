@@ -19,7 +19,8 @@ public class SupportTLSDetection {
                 storedInputIPAddresses.add(line);
             }
 
-            System.out.println(getNumberIPsSupportingTLS(storedInputIPAddresses));
+            System.out.format("The number of IP Address supporting TLS is %d.\n", getNumberIPsSupportingTLS(storedInputIPAddresses));
+            System.out.format("The number of IP Address supporting SSL is %d.\n", getNumberIPsSupportingSSL(storedInputIPAddresses));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -55,9 +56,59 @@ public class SupportTLSDetection {
         return numberIPsSupportingTLS;
     }
 
-    private static boolean containsABBA(String sequence) {
-        for (int startingLetter = 0; startingLetter < sequence.length() - 3; startingLetter++) {
-            if (sequence.charAt(startingLetter) != sequence.charAt(startingLetter + 1) && sequence.charAt(startingLetter) == sequence.charAt(startingLetter + 3) && sequence.charAt(startingLetter + 1) == sequence.charAt(startingLetter + 2)) {
+    private static boolean containsABBA(String stringSequence) {
+        for (int startingLetter = 0; startingLetter < stringSequence.length() - 3; startingLetter++) {
+            if (stringSequence.charAt(startingLetter) != stringSequence.charAt(startingLetter + 1) && stringSequence.charAt(startingLetter) == stringSequence.charAt(startingLetter + 3) && stringSequence.charAt(startingLetter + 1) == stringSequence.charAt(startingLetter + 2)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static int getNumberIPsSupportingSSL(List<String> storedInputIPAddresses) {
+        int numberIPsSupportingTLS = 0;
+
+        for (String IPAddress : storedInputIPAddresses) {
+            boolean supportsTLS = false;
+
+            String[] stringSequences = IPAddress.split("\\[(.*?)\\]");
+            List<String> ABAsInSequences = getABAsInSequence(stringSequences);
+
+            Pattern pattern = Pattern.compile("\\[(.*?)\\]");
+            Matcher matcher = pattern.matcher(IPAddress);
+            while (matcher.find()) {
+                for(String ABA : ABAsInSequences) {
+                    String BAB = Character.toString(ABA.charAt(1)) + Character.toString(ABA.charAt(0)) + Character.toString(ABA.charAt(1));
+                    if (containsBAB(matcher.group(1), BAB)) {
+                        supportsTLS = true;
+                    }
+                }
+            }
+
+            if (supportsTLS) {
+                numberIPsSupportingTLS++;
+            }
+        }
+
+        return numberIPsSupportingTLS;
+    }
+
+    private static List<String> getABAsInSequence(String[] stringSequences) {
+        List<String> ABAsInSequences = new ArrayList<>();
+        for(String stringSequence: stringSequences) {
+            for (int startingLetter = 0; startingLetter < stringSequence.length() - 2; startingLetter++) {
+                if (stringSequence.charAt(startingLetter) != stringSequence.charAt(startingLetter + 1) && stringSequence.charAt(startingLetter) == stringSequence.charAt(startingLetter + 2)) {
+                    ABAsInSequences.add(stringSequence.substring(startingLetter, startingLetter + 3));
+                }
+            }
+        }
+
+        return ABAsInSequences;
+    }
+
+    private static boolean containsBAB(String stringSequence, String BAB) {
+        for (int startingLetter = 0; startingLetter < stringSequence.length() - 2; startingLetter++) {
+            if (stringSequence.substring(startingLetter, startingLetter+3).equals(BAB)) {
                 return true;
             }
         }
