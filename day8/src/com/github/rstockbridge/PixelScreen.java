@@ -21,7 +21,7 @@ class PixelScreen {
     }
 
     void rotateColumn(int column, int amount) {
-        for(int i = 0; i < amount; i++) {
+        for (int i = 0; i < amount; i++) {
             boolean storedBottomPixel = pixels[numberOfRows - 1][column];
             for (int row = numberOfRows - 1; row > 0; row--) {
                 pixels[row][column] = pixels[row - 1][column];
@@ -31,7 +31,7 @@ class PixelScreen {
     }
 
     void rotateRow(int row, int amount) {
-        for(int i = 0; i < amount; i++) {
+        for (int i = 0; i < amount; i++) {
             boolean storedRightPixel = pixels[row][numberOfColumns - 1];
             for (int column = numberOfColumns - 1; column > 0; column--) {
                 pixels[row][column] = pixels[row][column - 1];
@@ -46,7 +46,10 @@ class PixelScreen {
                 if (pixels[row][column]) {
                     System.out.format("%c", '#');
                 } else {
-                    System.out.format("%c", '.');
+                    System.out.format("%c", ' ');
+                }
+                if ((column + 1) % 5 == 0) {
+                    System.out.format("%s", "  ");
                 }
             }
             System.out.println();

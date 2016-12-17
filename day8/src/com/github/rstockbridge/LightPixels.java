@@ -32,7 +32,8 @@ public class LightPixels {
                 }
             }
 
-            System.out.format("The number of lit pixels is %d.\n", screen.countNumberOfLitPixels());
+            System.out.format("The number of lit pixels is %d.\n\n", screen.countNumberOfLitPixels());
+            screen.print();
 
         } catch (IOException e) {
             e.printStackTrace();
