@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 public class DecompressFiles {
 
-    private static String instructionREGEX = "\\((\\d+)x(\\d+)\\)";
+    private static final Pattern PATTERN = Pattern.compile("\\((\\d+)x(\\d+)\\)");
 
     public static void main(String[] args) {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader("/Users/rebecca/Desktop/rebecca_java/" +
@@ -16,6 +16,7 @@ public class DecompressFiles {
             String fileData = bufferedReader.readLine();
 
             System.out.format("The length of the file after Part I decompression is %d.\n", calculateLengthUsingPartIDecompression(fileData));
+            System.out.format("The length of the file after Part II decompression is %d.\n", calculateLengthUsingPartIIDecompression(fileData));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -27,9 +28,7 @@ public class DecompressFiles {
 
     private static String decompressPartI(String fileData) {
         String decompressedFile = "";
-
-        Pattern pattern = Pattern.compile(instructionREGEX);
-        Matcher matcher = pattern.matcher(fileData);
+        Matcher matcher = PATTERN.matcher(fileData);
 
         while (matcher.find()) {
             int startingPositionOfInstruction = matcher.start();
@@ -51,5 +50,26 @@ public class DecompressFiles {
         decompressedFile += fileData;
 
         return decompressedFile;
+    }
+
+    private static long calculateLengthUsingPartIIDecompression(String fileData) {
+        return calculateLength(fileData);
+    }
+
+    private static long calculateLength(String string) {
+        Matcher matcher = PATTERN.matcher(string);
+
+        if (!matcher.find()) {
+            return string.length();
+        } else {
+            int startingPositionOfInstruction = matcher.start();
+            int endingPositionOfInstruction = startingPositionOfInstruction + matcher.group(0).length();
+            int lengthOfSequenceToRepeat = Integer.parseInt(matcher.group(1));
+            int numberOfTimesToRepeat = Integer.parseInt(matcher.group(2));
+
+            return startingPositionOfInstruction // length of sequence before instruction
+                    + numberOfTimesToRepeat * calculateLengthUsingPartIIDecompression(string.substring(endingPositionOfInstruction, endingPositionOfInstruction + lengthOfSequenceToRepeat)) // number of times to repeat * length of sequence to be repeated
+                    + calculateLengthUsingPartIIDecompression(string.substring(endingPositionOfInstruction + lengthOfSequenceToRepeat)); // length of remaining sequence
+        }
     }
 }
