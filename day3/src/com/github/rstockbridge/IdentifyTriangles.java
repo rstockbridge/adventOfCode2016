@@ -9,8 +9,8 @@ import java.util.ArrayList;
 public class IdentifyTriangles {
 
     public static void main(String[] args) {
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("/Users/rebecca/Desktop/rebecca_java/" +
-                "adventOfCode2016/day3/src/com/github/rstockbridge/input.txt"))) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("/Users/rebecca/Desktop/Dropbox/" +
+                "documents/coding/adventOfCode2016/day3/src/com/github/rstockbridge/input.txt"))) {
 
             ArrayList<String> storedInputFile = new ArrayList<>();
             for (String line; (line = bufferedReader.readLine()) != null; ) {

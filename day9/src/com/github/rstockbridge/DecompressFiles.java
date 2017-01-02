@@ -11,8 +11,8 @@ public class DecompressFiles {
     private static final Pattern PATTERN = Pattern.compile("\\((\\d+)x(\\d+)\\)");
 
     public static void main(String[] args) {
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("/Users/rebecca/Desktop/rebecca_java/" +
-                "adventOfCode2016/day9/src/com/github/rstockbridge/input.txt"))) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("/Users/rebecca/Desktop/Dropbox/" +
+                "documents/coding/adventOfCode2016/day9/src/com/github/rstockbridge/input.txt"))) {
             String fileData = bufferedReader.readLine();
 
             System.out.format("The length of the file after Part I decompression is %d.\n", calculateLengthUsingPartIDecompression(fileData));
