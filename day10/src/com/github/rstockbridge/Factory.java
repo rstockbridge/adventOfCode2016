@@ -80,8 +80,8 @@ class Factory {
             int highChipToBeDistributed = giver.getHigh();
             giver.removeChips();
 
-            distributeChip(lowChipToBeDistributed, getLowRecipient(activeGiveInstruction));
-            distributeChip(highChipToBeDistributed, getHighRecipient(activeGiveInstruction));
+            distributeChip(lowChipToBeDistributed, getRecipient(activeGiveInstruction, true));
+            distributeChip(highChipToBeDistributed, getRecipient(activeGiveInstruction, false));
 
             storedGiveInstructions.remove(activeGiveInstruction);
         }
@@ -91,19 +91,14 @@ class Factory {
         recipient.addChip(chip);
     }
 
-    private Recipient getLowRecipient(GiveInstruction activeGiveInstruction) {
-        if (activeGiveInstruction.lowReceiverType.equals("bot")) {
-            return getBalanceBot(activeGiveInstruction.lowRecipientNumber, allBots);
-        } else {
-            return getOutput(activeGiveInstruction.lowRecipientNumber, allOutput);
-        }
-    }
+    private Recipient getRecipient(GiveInstruction activeGiveInstruction, boolean isLow) {
+        String recipientType = isLow ? activeGiveInstruction.lowRecipientType : activeGiveInstruction.highRecipientType;
+        int recipientNumber = isLow ? activeGiveInstruction.lowRecipientNumber : activeGiveInstruction.highRecipientNumber;
 
-    private Recipient getHighRecipient(GiveInstruction activeGiveInstruction) {
-        if (activeGiveInstruction.highReceiverType.equals("bot")) {
-            return getBalanceBot(activeGiveInstruction.highReceiverNumber, allBots);
+        if (recipientType.equals("bot")) {
+            return getBalanceBot(recipientNumber, allBots);
         } else {
-            return getOutput(activeGiveInstruction.highReceiverNumber, allOutput);
+            return getOutput(recipientNumber, allOutput);
         }
     }
 

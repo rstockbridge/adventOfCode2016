@@ -15,10 +15,4 @@ class Output implements Recipient {
     public void addChip(int chip) {
         chips.add(chip);
     }
-
-    @Override
-    public String toString() {
-        return chips.toString();
-    }
-
 }

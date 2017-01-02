@@ -2,18 +2,18 @@ package com.github.rstockbridge;
 
 public class GiveInstruction implements Instruction {
     int givingBotNumber;
-    String lowReceiverType;
+    String lowRecipientType;
     int lowRecipientNumber;
-    String highReceiverType;
-    int highReceiverNumber;
+    String highRecipientType;
+    int highRecipientNumber;
 
     @Override
     public void parseInputData(String inputData) {
         String[] parsedInputData = inputData.split(" ");
         givingBotNumber = Integer.parseInt(parsedInputData[1]);
-        lowReceiverType = parsedInputData[5];
+        lowRecipientType = parsedInputData[5];
         lowRecipientNumber = Integer.parseInt(parsedInputData[6]);
-        highReceiverType = parsedInputData[10];
-        highReceiverNumber = Integer.parseInt(parsedInputData[11]);
+        highRecipientType = parsedInputData[10];
+        highRecipientNumber = Integer.parseInt(parsedInputData[11]);
     }
 }
