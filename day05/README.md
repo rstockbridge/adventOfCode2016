@@ -44,7 +44,11 @@ Given the actual Door ID and this new method, what is the password? Be extra pro
 
 To run the solution for Day 5:
 
-    ./gradlew run
+* From this directory using gradle: `./gradlew run`
+
+* From `src/main/java`:
+	1. Compile using `javac *.java`
+	2. Run using `java Main`
 
 # License
 

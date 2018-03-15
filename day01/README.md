@@ -36,7 +36,12 @@ How many blocks away is the first location you visit twice?
 
 To run the solution for Day 1:
 
-    ./gradlew run
+* From this directory using gradle: `./gradlew run`
+
+* From `src/main/java`:
+	1. Compile using `javac *.java`.
+	2. Run using `java Main`.
+
 
 # License
 

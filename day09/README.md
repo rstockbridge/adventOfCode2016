@@ -46,7 +46,11 @@ What is the decompressed length of the file using this improved format?
 
 To run the solution for Day 9:
 
-    ./gradlew run
+* From this directory using gradle: `./gradlew run`
+
+* From `src/main/java`:
+	1. Compile using `javac *.java`
+	2. Run using `java Main`
 
 # License
 

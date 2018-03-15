@@ -35,7 +35,11 @@ In your puzzle input, and instead reading by columns, how many of the listed tri
 
 To run the solution for Day 3:
 
-    ./gradlew run
+* From this directory using gradle: `./gradlew run`
+
+* From `src/main/java`:
+	1. Compile using `javac *.java`
+	2. Run using `java Main`
 
 # License
 

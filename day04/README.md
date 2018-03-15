@@ -37,7 +37,11 @@ What is the sector ID of the room where North Pole objects are stored?
 
 To run the solution for Day 4:
 
-    ./gradlew run
+* From this directory using gradle: `./gradlew run`
+
+* From `src/main/java`:
+	1. Compile using `javac *.java`
+	2. Run using `java Main`
 
 # License
 

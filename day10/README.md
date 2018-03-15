@@ -40,7 +40,11 @@ What do you get if you multiply together the values of one chip in each of outpu
 
 To run the solution for Day 10:
 
-    ./gradlew run
+* From this directory using gradle: `./gradlew run`
+
+* From `src/main/java`:
+	1. Compile using `javac *.java`
+	2. Run using `java Main`
 
 # License
 

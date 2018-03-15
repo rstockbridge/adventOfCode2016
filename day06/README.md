@@ -47,7 +47,11 @@ Given the recording in your puzzle input and this new decoding methodology, what
 
 To run the solution for Day 6:
 
-    ./gradlew run
+* From this directory using gradle: `./gradlew run`
+
+* From `src/main/java`:
+	1. Compile using `javac *.java`
+	2. Run using `java Main`
 
 # License
 

@@ -58,7 +58,11 @@ After you swipe your card, what code is the screen trying to display?
 
 To run the solution for Day 8:
 
-    ./gradlew run
+* From this directory using gradle: `./gradlew run`
+
+* From `src/main/java`:
+	1. Compile using `javac *.java`
+	2. Run using `java Main`
 
 # License
 

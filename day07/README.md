@@ -38,7 +38,11 @@ How many IPs in your puzzle input support SSL?
 
 To run the solution for Day 7:
 
-    ./gradlew run
+* From this directory using gradle: `./gradlew run`
+
+* From `src/main/java`:
+	1. Compile using `javac *.java`
+	2. Run using `java Main`
 
 # License
 

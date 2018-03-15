@@ -59,7 +59,11 @@ Using the same instructions in your puzzle input, what is the correct bathroom c
 
 To run the solution for Day 2:
 
-    ./gradlew run
+* From this directory using gradle: `./gradlew run`
+
+* From `src/main/java`:
+	1. Compile using `javac *.java`
+	2. Run using `java Main`
 
 # License
 
