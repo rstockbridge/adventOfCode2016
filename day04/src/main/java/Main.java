@@ -6,7 +6,7 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("/Users/rebecca/Desktop/Dropbox/documents/work/coding/AdventOfCode2016/day04/src/main/java/input.txt"))) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("src/main/java/input.txt"))) {
 
             List<String> storedInputFile = new ArrayList<>();
             for (String line; (line = bufferedReader.readLine()) != null; ) {

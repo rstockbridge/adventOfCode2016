@@ -8,7 +8,7 @@ public class Main {
     private static int inputDataNumberOfColumns = -1;
 
     public static void main(String[] args) {
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("/Users/rebecca/Desktop/Dropbox/documents/work/coding/AdventOfCode2016/day06/src/main/java/input.txt"))) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("src/main/java/input.txt"))) {
 
             List<String> storedTransposedInputFile = getTransposedInputData(bufferedReader);
 

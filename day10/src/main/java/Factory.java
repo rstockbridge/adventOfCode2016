@@ -25,7 +25,7 @@ class Factory {
     }
 
     private void parseInputData() {
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("/Users/rebecca/Desktop/Dropbox/documents/work/coding/AdventOfCode2016/day10/src/main/java/input.txt"))) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("src/main/java/input.txt"))) {
             for (String line; (line = bufferedReader.readLine()) != null; ) {
                 if (line.contains("value")) {
                     ValueInstruction valueInstruction = new ValueInstruction();
